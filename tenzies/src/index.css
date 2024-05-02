@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #0b2434;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
