@@ -1,6 +1,7 @@
 import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
+import bcrypt from "bcrypt";
 const app = express();
 const db = mysql.createConnection({
   host: "localhost",
@@ -10,12 +11,20 @@ const db = mysql.createConnection({
 });
 app.use(express.json());
 app.use(cors());
-app.get("/", (req, res) => {
-  res.json("Hello I am satheesh");
-});
+const saltRound = 10;
+// app.get("/", (req, res) => {
+//   res.json("Hello I am satheesh");
+// });
 app.get("/data", (req, res) => {
-  const q = "SELECT * FROM user;";
-  db.query(q, (err, data) => {
+  const { id } = req.query;
+  console.log(id);
+  const q = `
+    SELECT user.username, scores.score, scores.timestamp
+    FROM user
+    LEFT JOIN scores ON user.id = scores.userId
+    WHERE user.id = ?
+  `;
+  db.query(q, [id], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
@@ -47,30 +56,35 @@ app.post("/register", (req, res) => {
     }
 
     // Username doesn't exist, proceed with registration
-    const insertUserQuery =
-      "INSERT INTO user(username, email, password) VALUES (?, ?, ?)";
-    db.query(insertUserQuery, [username, email, password], (err, userData) => {
+    bcrypt.hash(password, saltRound, (err, hash) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ error: "Internal Server Error" });
       }
-
-      const userId = userData.insertId;
-      const insertScoreQuery =
-        "INSERT INTO scores(userId, timestamp) VALUES (?, ?)";
-      const scoreValue = [userId, new Date()];
-      db.query(insertScoreQuery, scoreValue, (err) => {
+      const insertUserQuery =
+        "INSERT INTO user(username, email, password) VALUES (?, ?, ?)";
+      db.query(insertUserQuery, [username, email, hash], (err, userData) => {
         if (err) {
           console.error(err);
           return res.status(500).json({ error: "Internal Server Error" });
         }
 
-        return res.status(200).json("User created successfully");
+        const userId = userData.insertId;
+        const insertScoreQuery =
+          "INSERT INTO scores(userId, timestamp) VALUES (?, ?)";
+        const scoreValue = [userId, new Date()];
+        db.query(insertScoreQuery, scoreValue, (err) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal Server Error" });
+          }
+
+          return res.status(200).json("User created successfully");
+        });
       });
     });
   });
 });
-
 app.post("/login", (req, res) => {
   const q = "SELECT * FROM user WHERE username = ?";
   db.query(q, [req.body.username], (err, data) => {
@@ -78,15 +92,40 @@ app.post("/login", (req, res) => {
       console.error("Error executing database query:", err);
       return res.status(500).json({ error: "Internal Server Error" });
     }
-    if (data.length === 0) {
+    if (data.length <= 0) {
       return res.status(400).json({
         message: "User does not exist. Sign up to create an account.",
       });
-    } else if (data[0].password === req.body.password) {
-      return res.status(200).json({ message: "Welcome to Tenzies" });
     } else {
-      return res.status(401).json({ message: "Username/password incorrect" });
+      bcrypt.compare(req.body.password, data[0].password, (err, response) => {
+        if (err) {
+          console.error("Error comparing passwords:", err);
+          return res.status(500).json({ error: "Internal Server Error" });
+        }
+        if (response) {
+          return res.status(200).json({
+            id: data[0].id,
+            username: data[0].username,
+            message: "Welcome to Tenzies",
+          });
+        } else {
+          return res
+            .status(401)
+            .json({ message: "Username/password incorrect" });
+        }
+      });
     }
+  });
+});
+app.post("/addscore", (req, res) => {
+  const { userid, score } = req.body;
+  const q = "INSERT INTO scores(userId,score) VALUES(?,?)";
+  db.query(q, [userid, score], (err, data) => {
+    if (err) {
+      console.error("Error executing database query:", err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+    return res.status(200).json("score added successfully");
   });
 });
 

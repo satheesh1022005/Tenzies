@@ -1,7 +1,9 @@
 import React from "react";
 import './Game.css';
 import {nanoid} from "nanoid"
-function Game({tenzies,setTenzies}){
+import axios from "axios";
+function Game({tenzies,setTenzies,id}){
+    console.log("id",id);
     const[values,setValues]=React.useState([]);
     const[cnt,Setcnt]=React.useState(0);
     const[time,setTime]=React.useState({minutes:0,seconds:0,milliSeconds:0})
@@ -27,7 +29,7 @@ function Game({tenzies,setTenzies}){
                     prev.minutes+=1;
                 }
             }
-            console.log(timerInterval);
+            //console.log(timerInterval);
             return{
                 minutes:prev.minutes,
                 seconds:prev.seconds,
@@ -35,10 +37,10 @@ function Game({tenzies,setTenzies}){
             }
         })
     }
-    function start() {
-        const interval = setInterval(timer, 1);
-        setTimerInterval(interval);
-    }
+    // function start() {
+    //     const interval = setInterval(timer, 1);
+    //     setTimerInterval(interval);
+    // }
     function freeze(id){
         setValues(prev=> prev.map(die=>{
             return die.id===id ? {...die,freeze:!die.freeze} : die;
@@ -70,13 +72,13 @@ function Game({tenzies,setTenzies}){
         setValues([]);
         Setcnt(0); 
         setGameOver(false);
-        clearInterval(timerInterval); // Clear the interval using the state variable
+        clearInterval(timerInterval);
         setTimerInterval(null);
     }
     React.useEffect(() => {
         if (gameOver) {
             clearInterval(timerInterval);
-            console.log(time);
+            //console.log(time);
         }
     }, [gameOver]);
     React.useEffect(()=>{
@@ -85,9 +87,13 @@ function Game({tenzies,setTenzies}){
         const iniValue=values[0]?.value;
         const allSameValue = values.every(val => val.value === iniValue);;
         if(held&&allSameValue){
+            axios.post("http://localhost:8800/addscore",{userid:id,score:cnt})
+            .then(res=>console.log(res.data))
+            .catch(err=>console.log(err));
             setTenzies(true);
             setGameOver(true);
             console.log("You win");
+            
         }        
     }
     },[values])
@@ -98,13 +104,12 @@ function Game({tenzies,setTenzies}){
             </div>
             {values.length==0 ?<button className="roll" onClick={()=>{
                 change();
-                start();
             }}> Let's Start</button> :
             tenzies ? <button onClick={clearData}  className="roll die-roll">New game</button> : <button onClick={change}  className="roll die-roll">Roll</button>}
             {values.length>0 &&<div className="features">
-                <p>Dice roll count:{cnt}</p>
-                <p>Timer:{time.minutes<10?'0'+time.minutes:time.minutes}{":"}{time.seconds<10?'0'+time.seconds:time.seconds}{":"}{time.milliSeconds%100}</p>
+                
             </div>}
+            <p className="text">Dice roll count: {cnt}</p>
 
         </div>
     );

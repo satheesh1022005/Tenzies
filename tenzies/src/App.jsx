@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import Game from './components/Game';
@@ -6,28 +6,21 @@ import Confetti from 'react-confetti'
 import Scores from './components/scores';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
-import { BrowserRouter,Routes,Route } from 'react-router-dom';
+import Home from './components/Home';
+import { BrowserRouter,Routes,Route,Navigate } from 'react-router-dom';
 function App() {
-  const [tenzies,setTenzies]=React.useState(false);
+  const [userName,setUserName]=useState("");
+  const[id,setId]=useState("");
+  const [tenzies,setTenzies]=useState(false);
+  const isAuthenticated = userName!="";
+  console.log(id);
   return(
     <BrowserRouter>
       <Routes>
-      <Route path="/" element={<Login/>}/>
-      <Route path="/signup" element={<Register/>}/>
-        <Route path='/home' element={
-          <div className='root-container'>  
-          {tenzies && <Confetti height={600}/>}
-          <section className='header'>
-            <h1>Tenzies</h1>
-            <p className='instruction'>Roll until all dieces are the same.Click each die to freeze it at its current value between rolls</p>
-          </section>
-          <section className='component'>
-              <Game tenzies={tenzies} setTenzies={setTenzies}/>
-          </section>
-          </div>
-        }/>
-        <Route path="/scores" element={<Scores/>}/>
-
+      <Route path="/" element={<Login userName={userName} setUserName={setUserName} id={id} setId={setId}/>}/>
+      <Route path="/signup" element={ <Register/>}/>
+      <Route path='/home' element={isAuthenticated ? <Home tenzies={tenzies} setTenzies={setTenzies} id={id}/> : <Navigate to="/"/>}/>
+      <Route path="/scores" element={isAuthenticated ?<Scores id={id}/> : <Navigate to="/"/>}/>
       </Routes>
     </BrowserRouter>
   );

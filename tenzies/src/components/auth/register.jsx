@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
+import './auth.css';
 function Register(){
     const[message,setMessage]=useState("");
     const[data,setData]=useState({
@@ -8,12 +9,14 @@ function Register(){
         email:"",
         password:""
     })
+    const navigate=useNavigate();
     function handleSubmit(){
         console.log("Register",data);
         axios.post("http://localhost:8800/register",data)
             .then((res)=>{
                 if(res.status==200){
                     setMessage(res.data.message);
+                    navigate("/");
                 }
             })
             .catch(err=>{
@@ -38,7 +41,7 @@ function Register(){
         //console.log(data);
     }
     return(
-        <div>
+        <div className="signup-container">
             <h1>Signup</h1>
             <label htmlFor="userName">User name</label>
             <input id="username" name="username" placeholder="user name" onChange={handleChange}></input>
@@ -48,7 +51,7 @@ function Register(){
             <input id="password" name="password" placeholder="password" type="password" onChange={handleChange}></input>
             <button onClick={handleSubmit}>Register</button>
             <p>Already have an account? <Link to="/">Login</Link></p>
-            {message && <p>{message}</p>}
+            {message && <p className="err">{message}</p>}
         </div>
     );
 }
