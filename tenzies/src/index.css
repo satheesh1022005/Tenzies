@@ -3,9 +3,41 @@ body {
   padding: 0;
   box-sizing: border-box;
   min-height: 100vh;
-  background-color: #0b2434;
   color: #fff;
   padding: 20px;
   display: flex;
   justify-content: center;
+  position: relative; /* Required for pseudo-element positioning */
+  overflow: hidden; /* Ensures no scrolling if the pseudo-element goes beyond the viewport */
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3; /* Adjusts the opacity of the background image */
+  z-index: -2; /* Places the pseudo-element behind other content */
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Adds a semi-transparent black overlay */
+  z-index: -1; /* Places the overlay behind the content but above the image */
 }

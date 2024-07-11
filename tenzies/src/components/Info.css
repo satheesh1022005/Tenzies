@@ -1,0 +1,110 @@
+/* Info.css */
+
+.info-container {
+  margin: 20px auto;
+  max-width: 1400px;
+  width: 90%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 600px; /* Limit the height for scrolling */
+}
+
+.info-section {
+  margin-bottom: 20px;
+}
+
+.info-section h2 {
+  color: #333;
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+.info-section p {
+  color: #555;
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.personal-details {
+  background-color: #fff;
+  color: #555;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.personal-details h3 {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.personal-details ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.personal-details li {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+}
+
+.personal-details li:before {
+  content: "•";
+  color: #333;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+.personal-details {
+  margin-top: 20px;
+}
+
+.personal-details h3 {
+  font-size: 1.5em;
+  color: #333;
+}
+
+.personal-details ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.personal-details ul li {
+  margin-bottom: 10px;
+}
+
+.personal-details ul li a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.personal-details ul li a:hover {
+  color: #0056b3;
+}
+@media (max-width: 600px) {
+  .info-container {
+    padding: 15px;
+  }
+
+  .info-section h2 {
+    font-size: 1.6em;
+  }
+
+  .info-section p {
+    font-size: 1em;
+  }
+
+  .personal-details h3 {
+    font-size: 1.3em;
+  }
+
+  .personal-details li {
+    font-size: 1em;
+  }
+}

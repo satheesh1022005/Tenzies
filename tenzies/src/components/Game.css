@@ -1,3 +1,6 @@
+.header {
+  color: #555;
+}
 .game-container {
   display: flex;
   justify-content: center;
@@ -89,4 +92,20 @@
   right: 10px;
   padding: 10px 20px;
   cursor: pointer;
+}
+.roll-container {
+  display: flex;
+  flex-direction: column;
+  color: #5035ff;
+  align-items: center; /* Optional: center-align the buttons */
+}
+
+.roll-container .roll,
+.roll-container .clear {
+  margin: 2px 0; /* Optional: adds vertical space between elements */
+}
+
+.clear {
+  text-decoration: none; /* Optional: removes the underline from the link */
+  color: inherit; /* Optional: inherits the color of the parent */
 }

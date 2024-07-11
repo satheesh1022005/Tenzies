@@ -13,14 +13,15 @@ function App() {
   const[id,setId]=useState("");
   const [tenzies,setTenzies]=useState(false);
   const isAuthenticated = userName!="";
-  console.log(id);
+  console.log(id,userName);
+
   return(
     <BrowserRouter>
       <Routes>
       <Route path="/" element={<Login userName={userName} setUserName={setUserName} id={id} setId={setId}/>}/>
       <Route path="/signup" element={ <Register/>}/>
       <Route path='/home' element={isAuthenticated ? <Home tenzies={tenzies} setTenzies={setTenzies} id={id}/> : <Navigate to="/"/>}/>
-      <Route path="/scores" element={isAuthenticated ?<Scores id={id}/> : <Navigate to="/"/>}/>
+      <Route path="/leaderboard" element={isAuthenticated ?<Scores id={id}/> : <Navigate to="/"/>}/>
       </Routes>
     </BrowserRouter>
   );

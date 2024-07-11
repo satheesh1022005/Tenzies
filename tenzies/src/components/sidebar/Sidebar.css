@@ -1,0 +1,65 @@
+.right-sidebar {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 80px; /* Adjust height as needed */
+  width: 100%;
+  background-color: #fff; /* Adjust background color as needed */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Optional: Adds shadow for visual separation */
+  z-index: 1000; /* Adjust z-index to make sure it's above other content */
+}
+
+.right-sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+}
+
+.right-sidebar li {
+  padding: 15px;
+  text-align: center;
+}
+
+.right-sidebar li a {
+  display: block;
+  text-decoration: none;
+  color: #333; /* Adjust text color */
+}
+
+.right-sidebar li a img {
+  width: 30px; /* Adjust icon size */
+  height: auto;
+}
+
+/* Media query for tablet size and smaller */
+@media (min-width: 992px) {
+  .right-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 5em; /* Adjust sidebar width as needed */
+    background-color: #fff; /* Adjust background color as needed */
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); /* Optional: Adds shadow for visual separation */
+    z-index: 1000; /* Adjust z-index to make sure it's above other content */
+    bottom: auto; /* Reset bottom positioning */
+  }
+
+  .right-sidebar ul {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .right-sidebar li {
+    margin-top: 5px;
+    padding: 10px 0;
+  }
+  .right-sidebar li:hover {
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+}
