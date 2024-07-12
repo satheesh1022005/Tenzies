@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import './auth.css';
+import Loading from "./loading";
 function Login({ userName, setUserName,id,setId }) {
   const [data, setData] = useState({
     username: "",
@@ -9,8 +10,10 @@ function Login({ userName, setUserName,id,setId }) {
   });
   const navigate = useNavigate();
   const [Message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   function handleSubmit() {
+    setLoading(true);
     axios
       .post("https://tenzies-nv63.onrender.com/login", data)
       .then((res) => {
@@ -36,7 +39,8 @@ function Login({ userName, setUserName,id,setId }) {
         } else {
           setMessage("An error occurred. Please try again later.");
         }
-      });
+      })
+      .finally(() => setLoading(false));
     setData({
       username: "",
       password: ""
@@ -56,6 +60,7 @@ function Login({ userName, setUserName,id,setId }) {
 
   return (
     <div className="auth-container">
+      {loading && <Loading />} 
       <h1>Login</h1>
       <label htmlFor="username">User name</label>
       <input
