@@ -152,7 +152,7 @@ app.post("/addscore", async (req, res) => {
   }
 });
 
-const PORT = process.env.X_ZOHO_CATALYST_LISTEN_PORT || 9000;
+const PORT = process.env.PORT || 8800;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
