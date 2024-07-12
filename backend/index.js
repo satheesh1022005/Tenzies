@@ -152,7 +152,7 @@ app.post("/addscore", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 8800;
+const PORT = process.env.PORT || 8801;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
