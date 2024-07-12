@@ -6,6 +6,6 @@ export default defineConfig({
   base: "./",
   build: {
     cssCodeSplit: true,
-    outDir: "dist",
+    outDir: "build",
   },
 });
