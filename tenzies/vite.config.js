@@ -6,6 +6,8 @@ export default defineConfig({
   plugins: [react()],
   base: "./", // Ensure relative paths
   build: {
-    // No external options here
+    rollupOptions: {
+      external: ["react-router-dom"],
+    },
   },
 });
