@@ -4,9 +4,11 @@
 # Catalyst configuration files
 .catalystrc
 catalyst.json
+node_modules/*
 
 # Application configuration file
 app-config.json
+package-lock.json
 
 # SQLite database file
 database.sqlite
