@@ -7,5 +7,8 @@ export default defineConfig({
   build: {
     cssCodeSplit: true,
     outDir: "build",
+    mimeTypes: {
+      ".js": "application/javascript",
+    },
   },
 });
