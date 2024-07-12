@@ -12,7 +12,7 @@ function Register(){
     const navigate=useNavigate();
     function handleSubmit(){
         console.log("Register",data);
-        axios.post("http://localhost:8800/register",data)
+        axios.post("https://tenzies-nv63.onrender.com/register",data)
             .then((res)=>{
                 if(res.status==200){
                     setMessage(res.data.message);

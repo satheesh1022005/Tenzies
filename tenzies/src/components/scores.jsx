@@ -10,7 +10,7 @@ function Scores({ id }) {
     const fetchScores = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:8800/scores", {
+        const res = await axios.get("https://tenzies-nv63.onrender.com/scores", {
           headers: { Authorization: token },
         });
         setScore(res.data);

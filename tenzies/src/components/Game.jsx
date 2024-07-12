@@ -112,7 +112,7 @@ function Game({ tenzies, setTenzies, id }) {
             const score=calculateScore(time,cnt);
             if (held && allSameValue) {
                 //console.log(score);
-                axios.post("http://localhost:8800/addscore", { userid: id, score: score })
+                axios.post("https://tenzies-nv63.onrender.com/addscore", { userid: id, score: score })
                     .then(res => console.log(res.data))
                     .catch(err => console.log(err));
                 setTenzies(true);
