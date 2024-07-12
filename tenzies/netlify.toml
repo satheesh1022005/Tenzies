@@ -1,9 +1,0 @@
-[headers]
-  [[headers.rules]]
-    for = "/*.js"
-    [headers.rules.headers]
-      Content-Type = "application/javascript"
-  [[headers.rules]]
-    for = "/*.jsx"
-    [headers.rules.headers]
-      Content-Type = "application/javascript"
