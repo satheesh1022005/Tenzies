@@ -1,0 +1,12 @@
+# Environment variables
+.env
+
+# Catalyst configuration files
+.catalystrc
+catalyst.json
+
+# Application configuration file
+app-config.json
+
+# SQLite database file
+database.sqlite
